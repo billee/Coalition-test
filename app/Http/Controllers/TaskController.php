@@ -15,13 +15,9 @@ class TaskController extends Controller
      */
     public function index(string $project_id = null)
     {
-
+        $projects = Project::where('user_id', Auth::user()->id)->get();
         if(!$project_id){
-            $projects = Project::where('user_id', Auth::user()->id)->get();
             $project_id = $projects->first()->id;
-        }else{
-            $projects = Project::where('user_id', Auth::user()->id)
-                    ->where('id', $project_id)->get();
         }
 
         $tasks = Task::where('user_id', Auth::user()->id)
@@ -29,9 +25,7 @@ class TaskController extends Controller
                     ->orderBy('priority', 'asc')
                     ->get();
 
-
-
-        return view('tasks.index', compact('tasks', 'projects'));
+        return view('tasks.index', compact('tasks', 'projects', 'project_id'));
     }
 
     /**
@@ -52,7 +46,7 @@ class TaskController extends Controller
 
         Task::create([
             'task_name' => $validated['task_name'],
-            //'priority' => 0,
+            'priority' => 0,
             'project_id' => $validated['project_id'],
             'user_id'    => Auth::user()->id,
         ]);

@@ -50,6 +50,13 @@
                 });
             });
 
+            $('.select-project').on('change', function() {
+                var projectId = this.value;
+
+                console.log(projectId);
+                window.location.href = '/tasks/' + projectId;
+            });
+
             function sendOrderToServer() {
                 var order = [];
                 $('tbody tr').each(function(index, element) {

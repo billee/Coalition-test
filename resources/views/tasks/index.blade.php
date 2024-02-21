@@ -19,13 +19,13 @@
                 </a>
                 {{-- <h1 class="text-center text-xl">{{$tasks->first()->project_name}}</h1> --}}
                 <div>
-                    <select class="rounded border-gray-300 text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none">
+                    <select class="rounded border-gray-300 text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none select-project">
                         <option value="">Select project name...</option>
                         @foreach($projects as $key=>$project)
-                            @if($key == 0)
-                                <option value="{{$key}}" selected>{{$project->name}}</option>
+                            @if($project->id == $project_id)
+                                <option value="{{$project->id}}" selected>{{$project->name}}</option>
                             @else
-                                <option value="{{$key}}">{{$project->name}}</option>
+                                <option value="{{$project->id}}">{{$project->name}}</option>
                             @endif
                         @endforeach
                     </select>
