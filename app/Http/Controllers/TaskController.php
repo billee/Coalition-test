@@ -79,7 +79,7 @@ class TaskController extends Controller
 
         $task->update([
             'task_name' => $validated['task_name'],
-            'priority' => $validated['priority'],
+            'priority' => 0,
             'project_id' => $validated['project_id'],
             'user_id'    => Auth::user()->id,
         ]);
