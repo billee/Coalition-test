@@ -15,11 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('task_name');
             $table->integer('user_id');
-            $table->integer('priority');
+            $table->integer('priority')->nullable();
             $table->foreignId('project_id')->constrained();
             $table->timestamps();
         });
     }
+
+
 
     /**
      * Reverse the migrations.

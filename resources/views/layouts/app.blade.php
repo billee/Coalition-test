@@ -45,7 +45,7 @@
                     cursor: 'move',
                     opacity: 0.6,
                     update: function() {
-                        sendOrderToServer();
+                        dragDrop();
                     }
                 });
             });
@@ -57,7 +57,7 @@
                 window.location.href = '/tasks/' + projectId;
             });
 
-            function sendOrderToServer() {
+            function dragDrop() {
                 var order = [];
                 $('tbody tr').each(function(index, element) {
                     order.push({
