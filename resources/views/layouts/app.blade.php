@@ -11,6 +11,9 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0/dist/tailwind.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"  rel="stylesheet" >
+
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
@@ -29,8 +32,51 @@
 
             <!-- Page Content -->
             <main>
-                {{ $slot }}
+                {{-- {{ $slot }} --}}
+                @yield('content')
             </main>
         </div>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+        <script>
+            $(function() {
+                $('tbody').sortable({
+                    items: 'tr',
+                    cursor: 'move',
+                    opacity: 0.6,
+                    update: function() {
+                        sendOrderToServer();
+                    }
+                });
+            });
+
+            function sendOrderToServer() {
+                var order = [];
+                $('tbody tr').each(function(index, element) {
+                    order.push({
+                        id: $(this).attr('data-id'),
+                        position: index+1
+                    });
+                });
+
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url: "{{ url('tasks/reorder') }}",
+                    data: {
+                        order: order,
+                        _token: '{{csrf_token()}}'
+                    },
+                    success: function(response) {
+                        if (response.status == "success") {
+                            //console.log(response);
+                        } else {
+                            //console.log(response);
+                        }
+                    }
+                });
+            }
+
+        </script>
     </body>
 </html>
